@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Tools</title>
+  <style>
+    * { box-sizing: border-box; }
+
+:root{
+  --bg-1:#101728;
+  --bg-2:#0b1220;
+  --text:#f0f4ff;
+  --muted:#96a0c3;
+  --card:#121a2b;
+  --card2:#0f1627;
+  --accent:#4f7cff;
+  --accent-2:#2ad1ff;
+  --ring:#203056;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif;
+  width: 420px;
+  min-height: 180px;
+  padding: 16px;
+  background: radial-gradient(circle at top, var(--bg-1), var(--bg-2) 80%);
+  color: var(--text);
+  overflow: hidden;
+}
+
+/* ---------- Loader ---------- */
+.loader-container{
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 12px;
+  height: 150px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  box-shadow: 0 10px 24px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.spinner{
+  width: 28px; height: 28px;
+  border: 3px solid rgba(255,255,255,.1);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+.loader-text{ color: var(--muted); font-size: 12px; }
+
+@keyframes spin { to { transform: rotate(360deg); }}
+
+/* ---------- Tools (card) ---------- */
+.tools{
+  display: block;
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.04);
+  padding: 16px;
+}
+
+h2{
+  margin: 0 0 10px;
+  font-size: 18px;
+  letter-spacing: .2px;
+}
+
+/* textarea output */
+textarea{
+  width: 100%;
+  resize: vertical;
+  min-height: 92px;
+  background: #0c1426;
+  color: var(--text);
+  border: 1px solid var(--ring);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+}
+textarea:focus{ border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,124,255,.25); }
+
+.btns{
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px;
+}
+button{
+  appearance: none;
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, #1a2550, #162145);
+  color: var(--text);
+  padding: 8px 12px;
+  font-size: 13px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform .06s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow: 0 6px 16px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.05);
+}
+button:hover{ transform: translateY(-1px); }
+button:active{ transform: translateY(0); }
+
+button.secondary{
+  background: linear-gradient(180deg, #172036, #121a2b);
+  border-color: var(--ring);
+}
+button.ghost{
+  background: transparent;
+  border-color: var(--ring);
+}
+
+/* tiny hint */
+.hint{
+  margin: 10px 2px 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Tools UI -->
+  <div  class="tools">
+    <h2>BitpieClipBoard</h2>
+
+    <textarea id="outputText" rows="4" placeholder="Output will appear here..."></textarea>
+
+    <div class="btns">
+      <button id="genPasswordBtn">Generate Password</button>
+      <button id="genUsernameBtn">Generate Username</button>
+      <button id="genHashtagsBtn">Generate Hashtags</button>
+      <button id="clearBtn" class="secondary">Clear</button>
+      <button data-copy="#outputText" class="ghost">Copy</button>
+    </div>
+
+    <p class="hint">Generate Secure Passwords, Cool Usernames, And Trending Hashtags.</p>
+  </div>
+
+  <script>
+    // ======= TOOLS CODE =======
+function randomPassword(length = 12) {
+  const chars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+";
+  let pass = "";
+  for (let i = 0; i < length; i++) {
+    pass += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return pass;
+}
+
+function randomUsername() {
+  const adjectives = [
+    "cool", "fast", "happy", "lucky", "dark",
+    "bright", "silent", "wild", "epic", "smart",
+  ];
+  const nouns = [
+    "lion", "tiger", "panda", "eagle", "dragon",
+    "wolf", "ninja", "wizard", "coder", "ghost",
+  ];
+  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  const num = Math.floor(Math.random() * 1000);
+  return adj + noun + num;
+}
+
+function randomHashtags(count = 5) {
+  const words = [
+    "love","insta","photo","life","fun","style","happy","music","travel","food",
+    "nature","art","fitness","selfie","friends","summer","smile","fashion",
+    "beauty","motivation",
+  ];
+  let tags = [];
+  for (let i = 0; i < count; i++) {
+    const w = words[Math.floor(Math.random() * words.length)];
+    tags.push("#" + w);
+  }
+  return tags.join(" ");
+}
+
+// ===== UI Wireup =====
+document.addEventListener("DOMContentLoaded", () => {
+  // हमेशा tools दिखाना
+  document.querySelector(".tools").style.display = "block";
+
+  const output = document.getElementById("outputText");
+  if (!output) return;
+
+  document.getElementById("genPasswordBtn").addEventListener("click", () => {
+    output.value = randomPassword(14);
+  });
+
+  document.getElementById("genUsernameBtn").addEventListener("click", () => {
+    output.value = randomUsername();
+  });
+
+  document.getElementById("genHashtagsBtn").addEventListener("click", () => {
+    output.value = randomHashtags(7);
+  });
+
+  document.getElementById("clearBtn").addEventListener("click", () => {
+    output.value = "";
+  });
+
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const ta = document.querySelector(btn.getAttribute("data-copy"));
+      navigator.clipboard.writeText(ta.value || "");
+      const old = btn.textContent;
+      btn.textContent = "Copied!";
+      setTimeout(() => (btn.textContent = old), 1500);
+    });
+  });
+});
+
+  </script>
+</body>
+</html>
