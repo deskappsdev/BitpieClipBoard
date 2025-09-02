@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BitpieClipBoard – Passwords · Usernames · Hashtags</title>
+  <meta name="description" content="BitpieClipBoard helps you generate secure passwords, unique usernames, and trending hashtags instantly—then copy in one click." />
+  <meta property="og:title" content="BitpieClipBoard – Passwords · Usernames · Hashtags" />
+  <meta property="og:description" content="Generate passwords, usernames & hashtags instantly. One‑click copy. Lightweight & fast." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='12' fill='%230ea5e9'/><path d='M20 26h24v12H20z' fill='white'/><path d='M18 22h28a4 4 0 014 4v12a4 4 0 01-4 4H18a4 4 0 01-4-4V26a4 4 0 014-4zm2 6h10v8H20v-8zm14 0h10v8H34v-8z' fill='white' opacity='.6'/></svg>">
+  <style>
+    :root{
+      --bg: #070b12;
+      --panel: #0d1625;
+      --muted: #9db2ce;
+      --text: #e6f0ff;
+      --brand: #0ea5e9;
+      --brand-2: #22d3ee;
+      --accent: #a78bfa;
+      --ok: #22c55e;
+      --warn: #f59e0b;
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius-xl: 24px;
+      --radius: 14px;
+      --w: min(1100px, 92vw);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+      background: radial-gradient(1200px 600px at 70% -10%, rgba(34,211,238,.12), transparent 60%),
+                  radial-gradient(800px 400px at 20% 10%, rgba(167,139,250,.12), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:var(--brand)}
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(160%) blur(10px);
+      background: linear-gradient(180deg, rgba(7,11,18,.9), rgba(7,11,18,.6));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav{display:flex; align-items:center; gap:18px; margin:0 auto; width:var(--w); padding:14px 0;}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:.2px}
+    .brand svg{width:30px; height:30px}
+    .spacer{flex:1}
+    .btn{display:inline-flex; align-items:center; gap:10px; border:1px solid rgba(255,255,255,.1); background:linear-gradient(180deg, #0ea5e9, #0284c7);
+      color:white; padding:10px 16px; border-radius:999px; text-decoration:none; font-weight:700; box-shadow:var(--shadow);
+      transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow:0 14px 36px rgba(14,165,233,.35)}
+    .btn.secondary{background:transparent; color:var(--text); border-color:rgba(255,255,255,.16)}
+    .btn .chip{background:rgba(255,255,255,.15); padding:2px 8px; border-radius:999px; font-size:12px; font-weight:600}
+
+    .hero{width:var(--w); margin:48px auto; display:grid; grid-template-columns: 1.1fr .9fr; gap:28px; align-items:center}
+    .hero h1{font-size:clamp(32px, 4.2vw, 54px); line-height:1.1; margin:8px 0 10px}
+    .hero p.lead{font-size:clamp(16px, 1.6vw, 19px); color:var(--muted)}
+    .hero .cta{margin-top:22px; display:flex; gap:12px; flex-wrap:wrap}
+    .card{background:linear-gradient(180deg, rgba(13,22,37,.95), rgba(9,15,27,.95)); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius-xl); box-shadow:var(--shadow)}
+
+    .demo{padding:18px}
+    .demo .tabs{display:flex; gap:8px; padding:10px; background:rgba(255,255,255,.04); border-radius:12px;}
+    .tab{flex:1; text-align:center; padding:10px 12px; border-radius:10px; cursor:pointer; font-weight:700; border:1px solid transparent}
+    .tab[aria-selected="true"]{background:linear-gradient(180deg, rgba(14,165,233,.18), rgba(34,211,238,.14)); border-color:rgba(14,165,233,.45)}
+
+    .panel{padding:14px; margin-top:12px}
+    .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .controls label{font-size:14px; color:var(--muted)}
+    .controls input[type="number"], .controls select{background:#0b1322; color:var(--text); border:1px solid rgba(255,255,255,.12); border-radius:10px; padding:8px 10px; min-width:90px}
+    .controls .btn{padding:10px 14px}
+    .output{margin-top:12px; display:grid; grid-template-columns: 1fr auto; gap:10px; align-items:center}
+    .output textarea{width:100%; min-height:110px; resize:vertical; background:#0b1322; color:var(--text); border:1px dashed rgba(255,255,255,.18); border-radius:12px; padding:12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace}
+
+    .badges{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .badge{font-size:12px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.14); color:var(--muted)}
+
+    .features{width:var(--w); margin:16px auto 54px; display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .feature{padding:18px; border-radius:var(--radius); border:1px solid rgba(255,255,255,.08)}
+    .feature h3{margin:10px 0 4px}
+    .icon{width:26px; height:26px; display:inline-grid; place-items:center; border-radius:8px; background:linear-gradient(180deg, var(--brand), var(--brand-2));}
+    .muted{color:var(--muted)}
+
+    .how{width:var(--w); margin:0 auto 60px; display:grid; grid-template-columns: repeat(3, 1fr); gap:16px}
+    .step{padding:20px; border:1px dashed rgba(255,255,255,.14); border-radius:16px}
+    .step .num{font-weight:900; font-size:12px; letter-spacing:.2em; color:var(--brand)}
+
+    .faq{width:var(--w); margin:0 auto 80px}
+    details{background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:14px 16px; margin:10px 0}
+    summary{cursor:pointer; font-weight:700}
+
+    .toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%) translateY(120%); background:linear-gradient(180deg, #052c3b, #071d2c); border:1px solid rgba(34,211,238,.35); color:#c5f6ff; padding:12px 16px; border-radius:999px; box-shadow:var(--shadow); transition:transform .25s ease}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    footer{border-top:1px solid rgba(255,255,255,.08); padding:28px 0; color:var(--muted)}
+    .foot{width:var(--w); margin:0 auto; display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+
+    @media (max-width: 960px){
+      .hero{grid-template-columns: 1fr}
+      .features{grid-template-columns: 1fr;}
+      .how{grid-template-columns: 1fr;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <div class="brand" aria-label="BitpieClipBoard">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="url(#g)"/><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M20 26h24v12H20z" fill="white"/><path d="M18 22h28a4 4 0 014 4v12a4 4 0 01-4 4H18a4 4 0 01-4-4V26a4 4 0 014-4zm2 6h10v8H20v-8zm14 0h10v8H34v-8z" fill="white" opacity=".6"/></svg>
+        <span>BitpieClipBoard</span>
+      </div>
+      <div class="spacer"></div>
+      <a class="btn secondary" href="#demo" aria-label="Jump to live demo">Live Demo</a>
+      <a class="btn" href="#" id="installBtn" aria-label="Add to Chrome">
+        <span class="chip">FREE</span> Add to Chrome
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="badge">Lightweight • Fast • One‑Click Copy</div>
+        <h1>Generate <span style="background:linear-gradient(90deg,var(--brand),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent">Passwords</span>, <span style="background:linear-gradient(90deg,var(--accent),var(--brand)); -webkit-background-clip:text; background-clip:text; color:transparent">Usernames</span> & <span style="background:linear-gradient(90deg,var(--brand),var(--brand-2)); -webkit-background-clip:text; background-clip:text; color:transparent">Hashtags</span> Instantly</h1>
+        <p class="lead">BitpieClipBoard is a simple and powerful extension that helps you generate secure passwords, unique usernames, and trending hashtags—then copy with a single click.</p>
+        <div class="cta">
+          <a class="btn" href="#" id="installBtn2">Add to Chrome</a>
+          <a class="btn secondary" href="#how">How it works</a>
+        </div>
+        <div class="badges">
+          <div class="badge">Stay Secure</div>
+          <div class="badge">Be Creative</div>
+          <div class="badge">Save Time</div>
+          <div class="badge">One‑Click Copy</div>
+        </div>
+      </div>
+      <div class="card demo" id="demo">
+        <div class="tabs" role="tablist" aria-label="Generator tabs">
+          <button class="tab" role="tab" aria-selected="true" data-tab="password">Password</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="username">Username</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="hashtag">Hashtags</button>
+        </div>
+        <div class="panel" id="panel-password">
+          <div class="controls">
+            <label>Length <input type="number" id="pw-length" min="8" max="64" value="14"></label>
+            <label><input type="checkbox" id="pw-symbols" checked> Symbols</label>
+            <label><input type="checkbox" id="pw-numbers" checked> Numbers</label>
+            <label><input type="checkbox" id="pw-ucase" checked> Uppercase</label>
+            <button class="btn" id="gen-password">Generate</button>
+          </div>
+          <div class="output">
+            <textarea id="pw-output" readonly placeholder="Your secure password will appear here…"></textarea>
+            <button class="btn secondary" data-copy="pw-output">Copy</button>
+          </div>
+        </div>
+        <div class="panel" id="panel-username" hidden>
+          <div class="controls">
+            <label>Style
+              <select id="user-style">
+                <option value="clean" selected>Clean</option>
+                <option value="gamer">Gamer</option>
+                <option value="underscore">Underscore</option>
+                <option value="dot">Dot</option>
+              </select>
+            </label>
+            <button class="btn" id="gen-username">Generate</button>
+          </div>
+          <div class="output">
+            <textarea id="user-output" readonly placeholder="Your unique username will appear here…"></textarea>
+            <button class="btn secondary" data-copy="user-output">Copy</button>
+          </div>
+        </div>
+        <div class="panel" id="panel-hashtag" hidden>
+          <div class="controls">
+            <label>Count <input type="number" id="tag-count" min="3" max="30" value="10"></label>
+            <label><input type="checkbox" id="tag-camel" checked> CamelCase</label>
+            <button class="btn" id="gen-tags">Generate</button>
+          </div>
+          <div class="output">
+            <textarea id="tag-output" readonly placeholder="Trending hashtags will appear here…"></textarea>
+            <button class="btn secondary" data-copy="tag-output">Copy</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features">
+      <div class="feature card">
+        <div class="icon" aria-hidden="true">🔒</div>
+        <h3>Stay Secure</h3>
+        <p class="muted">Generate strong, random passwords with symbols, numbers, and uppercase—designed to protect your accounts.</p>
+      </div>
+      <div class="feature card">
+        <div class="icon">✨</div>
+        <h3>Be Creative</h3>
+        <p class="muted">Create unique usernames for apps, games, and social media. No more "user123" vibes.</p>
+      </div>
+      <div class="feature card">
+        <div class="icon">⚡</div>
+        <h3>Save Time</h3>
+        <p class="muted">Find trending hashtags in seconds and copy everything to your clipboard with one click.</p>
+      </div>
+    </section>
+
+    <section class="how" id="how">
+      <div class="step card">
+        <div class="num">STEP 1</div>
+        <h3>Install the Extension</h3>
+        <p class="muted">Hit <strong>Add to Chrome</strong> and the extension will appear next to your address bar.</p>
+      </div>
+      <div class="step card">
+        <div class="num">STEP 2</div>
+        <h3>Pick a Tool</h3>
+        <p class="muted">Choose between <em>Password</em>, <em>Username</em>, or <em>Hashtags</em>—all in one place.</p>
+      </div>
+      <div class="step card">
+        <div class="num">STEP 3</div>
+        <h3>Generate & Copy</h3>
+        <p class="muted">One click to generate, one click to copy. Paste anywhere instantly. Done.</p>
+      </div>
+    </section>
+
+    <section class="faq">
+      <h2>Frequently Asked Questions</h2>
+      <details>
+        <summary>Is everything generated offline?</summary>
+        <p class="muted">Yes. The demo on this page and the extension can generate items locally in your browser.</p>
+      </details>
+      <details>
+        <summary>Can I customize password length & characters?</summary>
+        <p class="muted">Absolutely—pick length 8–64 and toggle symbols, numbers, and uppercase.</p>
+      </details>
+      <details>
+        <summary>Do you track or store what I generate?</summary>
+        <p class="muted">No. Nothing you generate here is sent to a server.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="foot">
+      <div class="brand" style="opacity:.9">
+        <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="url(#g2)"/><defs><linearGradient id="g2" x1="0" x2="1"><stop offset="0" stop-color="#0ea5e9"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs><path d="M20 26h24v12H20z" fill="white"/><path d="M18 22h28a4 4 0 014 4v12a4 4 0 01-4 4H18a4 4 0 01-4-4V26a4 4 0 014-4zm2 6h10v8H20v-8zm14 0h10v8H34v-8z" fill="white" opacity=".6"/></svg>
+        <span>BitpieClipBoard</span>
+      </div>
+      <div>© <span id="year"></span> BitpieClipBoard. All rights reserved.<a href="https://trendfold.com/" >Developed by Trendfold.</a></div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied to clipboard ✅</div>
+
+  <script>
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+    const installUrl = '#'; // TODO: replace with your Chrome Web Store URL
+    $('#installBtn').href = installUrl; $('#installBtn2').href = installUrl;
+
+    const tabs = $$('.tab');
+    const panels = {
+      password: $('#panel-password'),
+      username: $('#panel-username'),
+      hashtag: $('#panel-hashtag')
+    };
+    tabs.forEach(t => t.addEventListener('click', () => {
+      tabs.forEach(x => x.setAttribute('aria-selected', 'false'));
+      t.setAttribute('aria-selected', 'true');
+      Object.values(panels).forEach(p => p.hidden = true);
+      panels[t.dataset.tab].hidden = false;
+      panels[t.dataset.tab].scrollIntoView({behavior:'smooth', block:'nearest'});
+    }));
+
+    const randFrom = s => s[Math.floor(Math.random()*s.length)];
+    function genPassword(len, opts){
+      const lower = 'abcdefghijklmnopqrstuvwxyz';
+      const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const numbers = '0123456789';
+      const symbols = '!@#$%^&*()_-+=[]{};:,.?/';
+      let pool = lower;
+      if(opts.ucase) pool += upper; if(opts.numbers) pool += numbers; if(opts.symbols) pool += symbols;
+      let result = '';
+      const must = [];
+      if(opts.ucase) must.push(randFrom(upper));
+      if(opts.numbers) must.push(randFrom(numbers));
+      if(opts.symbols) must.push(randFrom(symbols));
+      while(result.length < len - must.length){ result += randFrom(pool); }
+      result += must.join('');
+      return result.split('').sort(() => Math.random() - .5).join('');
+    }
+
+    $('#gen-password').addEventListener('click', () => {
+      const len = Math.max(8, Math.min(64, +$('#pw-length').value || 14));
+      const out = genPassword(len, {
+        symbols: $('#pw-symbols').checked,
+        numbers: $('#pw-numbers').checked,
+        ucase: $('#pw-ucase').checked
+      });
+      $('#pw-output').value = out;
+    });
+
+    const adjectives = ['Swift','Pixel','Nova','Aero','Shadow','Quantum',' Cosmic','Crimson','Frost','Delta','Turbo','Silent','Neon','Lunar','Solar','Rapid','Vivid','Prime','Alpha','Omega'];
+    const nouns = ['Falcon','Byte','Blaze','Ninja','Rider','Wizard','Titan','Drift','Orbit','Spark','Cipher','Spectre','Phoenix','Rogue','Samurai','Vortex','Comet','Matrix','Strike','Pulse'];
+    function genUsername(style='clean'){
+      const a = randFrom(adjectives).trim();
+      const n = randFrom(nouns);
+      const num = Math.floor(Math.random()*999).toString().padStart(2,'0');
+      const base = `${a}${n}`;
+      switch(style){
+        case 'gamer': return base + num;
+        case 'underscore': return `${a}_${n}_${num}`.toLowerCase();
+        case 'dot': return `${a}.${n}.${num}`.toLowerCase();
+        default: return base;
+      }
+    }
+    $('#gen-username').addEventListener('click', () => {
+      $('#user-output').value = genUsername($('#user-style').value);
+    });
+
+    const tagsPool = ['tech','coding','javascript','webdev','password','security','startup','productivity','design','ux','creator','youtube','gaming','instadaily','motivation','hustle','learn','tools','marketing','ai','machinelearning','tutorial','developer','lifehacks','inspiration','trending','today'];
+    function genTags(count=10, camel=true){
+      const s = new Set();
+      while(s.size < Math.max(3, Math.min(30, count))){ s.add(randFrom(tagsPool)); }
+      return Array.from(s).map(t => '#'+(camel ? t.replace(/(^|[_-])(\w)/g, (_,p,c)=> (p? '':'')+c.toUpperCase()) : t)).join(' ');
+    }
+    $('#gen-tags').addEventListener('click', () => {
+      $('#tag-output').value = genTags(+$('#tag-count').value || 10, $('#tag-camel').checked);
+    });
+
+    function showToast(msg='Copied to clipboard ✅'){
+      const el = $('#toast'); el.textContent = msg; el.classList.add('show');
+      setTimeout(() => el.classList.remove('show'), 1600);
+    }
+    $$('button[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
+      const id = btn.getAttribute('data-copy');
+      const val = $('#'+id).value.trim();
+      if(!val){ showToast('Nothing to copy'); return; }
+      try{ await navigator.clipboard.writeText(val); showToast(); }
+      catch{ showToast('Copy failed'); }
+    }));
+
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
