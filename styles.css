@@ -1,0 +1,135 @@
+/* BitpieClipBoard — Glass UI */
+:root{
+  --bg-1:#0b1220;
+  --bg-2:#0a0f1a;
+  --txt:#eaf1ff;
+  --muted:#9fb0d1;
+  --accent:#7c3aed; /* violet */
+  --glass: rgba(255,255,255,.08);
+  --border:rgba(255,255,255,.15);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 20px;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--txt);
+  background: radial-gradient(1200px 800px at 10% -10%, #1b2a55 0%, transparent 60%),
+              radial-gradient(1000px 700px at 110% 10%, #2a194a 0%, transparent 60%),
+              linear-gradient(180deg, var(--bg-1), var(--bg-2));
+  overflow-x:hidden;
+}
+
+.bg-grid{
+  position:fixed; inset:0; pointer-events:none;
+  background-image: linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,.04) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px;
+  mask-image: radial-gradient(ellipse at 20% -20%, rgba(0,0,0,.9), transparent 60%);
+  opacity:.35;
+}
+
+.glass{
+  background:var(--glass);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+.site-header{
+  position:sticky; top:16px; margin:16px; padding:10px 14px;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  z-index:10;
+}
+.brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--txt); font-weight:700; letter-spacing:.2px;}
+.brand-icon{width:28px; height:28px}
+.brand-text{font-size:1rem}
+.nav{display:flex; gap:18px; align-items:center}
+.nav a{color:var(--muted); text-decoration:none; font-weight:600}
+.nav a:hover{color:var(--txt)}
+.nav .cta{padding:.5rem .9rem; border:1px solid var(--border); border-radius:999px; color:var(--txt)}
+.nav-toggle{display:none; background:none; border:0; cursor:pointer}
+.nav-toggle span{display:block; width:22px; height:2px; background:var(--txt); margin:5px 0}
+
+.hero{display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; padding:120px 20px 60px; max-width:1200px; margin:0 auto;}
+.hero-content{padding:28px}
+.hero h1{font-size:clamp(28px, 4vw, 52px); line-height:1.05; margin:0 0 10px}
+.accent{color:var(--accent)}
+.sub{color:var(--muted); font-size:clamp(14px, 1.6vw, 18px)}
+.hero-actions{display:flex; gap:12px; margin-top:18px}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:.8rem 1.1rem; border-radius:14px; border:1px solid var(--border); background:transparent; color:var(--txt); text-decoration:none; cursor:pointer; font-weight:700}
+.btn.primary{background:linear-gradient(135deg, rgba(124,58,237,.25), rgba(99,102,241,.25));}
+.btn.ghost:hover{background:rgba(255,255,255,.06)}
+.btn.small{padding:.55rem .8rem; font-size:.9rem}
+
+.stats{display:flex; gap:22px; margin-top:18px}
+.stat{display:flex; flex-direction:column; align-items:flex-start}
+.stat span{font-weight:800; font-size:1rem}
+.stat small{color:var(--muted)}
+
+.hero-art{position:relative; padding:24px; min-height:320px}
+.orbit{position:absolute; inset:0; margin:auto; width:280px; height:280px; border-radius:50%; border:1px dashed rgba(255,255,255,.18); animation:spin 18s linear infinite; left:calc(50% - 140px); top:40px}
+.dot{position:absolute; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 18px var(--accent)}
+.d1{top:-5px; left:50%}
+.d2{bottom:-5px; left:20%}
+.d3{top:50%; right:-5px}
+.d4{left:-5px; top:25%}
+@keyframes spin{to{transform:rotate(360deg)}}
+.code-card{position:absolute; right:20px; bottom:20px; left:20px; padding:16px; border-radius:14px; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.14); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:12.5px; color:#cfe3ff}
+
+.section-title{text-align:center; font-size:clamp(22px, 3vw, 34px); margin:40px auto 18px}
+.features{padding:20px}
+.feature-grid{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:16px; max-width:1100px; margin:0 auto}
+.feature{padding:18px}
+.feature h3{margin:.2rem 0 .3rem}
+.feature p{margin:0; color:var(--muted)}
+
+.generators{padding:30px 20px}
+.cards{display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:18px; max-width:1100px; margin:0 auto}
+.card{padding:16px}
+.card header{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px}
+.card h3{margin:0}
+.icon-btn{background:none; border:0; cursor:pointer; width:34px; height:34px; display:grid; place-items:center; border-radius:12px; border:1px solid var(--border)}
+.icon-btn:hover{background:rgba(255,255,255,.06)}
+.icon-btn svg{width:18px; height:18px; fill:var(--txt); opacity:.9}
+.controls{display:grid; gap:10px; margin:8px 0 12px}
+.controls label{display:grid; gap:6px; font-size:.95rem; color:var(--muted)}
+.checks{display:flex; flex-wrap:wrap; gap:10px}
+.output{display:flex; gap:8px; align-items:center}
+.output .mono{flex:1; padding:.7rem .9rem; border-radius:12px; border:1px solid var(--border); background:rgba(0,0,0,.35); color:var(--txt); font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace}
+.output textarea.mono{min-height:100px}
+.hint{margin-top:8px; color:var(--muted); font-size:.85rem}
+.badge{display:inline-block; padding:.2rem .55rem; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.06); color:var(--muted)}
+
+.about{max-width:900px; margin:40px auto; padding:24px}
+.about .bullets{color:var(--muted)}
+
+.faq{max-width:900px; margin:20px auto 60px; padding:0 20px}
+.faq details{padding:14px 16px; margin:10px 0}
+.faq summary{cursor:pointer; font-weight:700}
+
+.site-footer{padding:24px 20px 80px; text-align:center; color:var(--muted)}
+.site-footer .links{display:flex; gap:16px; justify-content:center; margin-top:8px}
+#toast{position:fixed; bottom:18px; left:50%; transform:translateX(-50%); padding:.7rem 1rem; background:rgba(0,0,0,.7); color:#fff; border-radius:12px; opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; border:1px solid rgba(255,255,255,.2)}
+#toast.show{opacity:1; transform:translateX(-50%) translateY(-6px)}
+
+@media (max-width: 980px){
+  .hero{grid-template-columns:1fr; padding-top:90px}
+  .feature-grid{grid-template-columns: repeat(2, minmax(0,1fr));}
+  .cards{grid-template-columns: repeat(2, minmax(0,1fr));}
+  .hero-art{min-height:260px}
+}
+
+@media (max-width: 640px){
+  .nav{display:none}
+  .nav.open{display:flex; position:absolute; right:16px; top:60px; flex-direction:column; padding:10px; background:var(--glass)}
+  .nav-toggle{display:block}
+  .feature-grid{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr}
+  .hero{padding-top:74px}
+}
