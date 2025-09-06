@@ -4,37 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Privacy Policy • Bitpie Clipboard</title>
-  <meta name="description" content="Privacy Policy for the Bitpie Clipboard Chrome extension. We do not collect, store, or sell personal data. All generation happens locally in your browser." />
+  <meta name="description" content="Privacy Policy for Bitpie Clipboard Chrome extension. We do not collect, store, or sell personal data. All generation happens locally in your browser." />
   <meta name="theme-color" content="#0b1220" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Privacy Policy • Bitpie Clipboard" />
-  <meta property="og:description" content="We don’t collect personal data. Passwords, usernames, and hashtags are generated locally in your browser." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://deskappsdev.github.io/BitpieClipBoard/privacy-policy.html" />
-
-  <!-- Structured data (schema.org) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "PrivacyPolicy",
-    "name": "Bitpie Clipboard Privacy Policy",
-    "inLanguage": "en",
-    "publisher": {
-      "@type": "Organization",
-      "name": "DeskAppsDev",
-      "url": "https://deskappsdev.github.io/BitpieClipBoard/"
-    },
-    "about": {
-      "@type": "SoftwareApplication",
-      "name": "Bitpie Clipboard",
-      "applicationCategory": "BrowserExtension"
-    },
-    "url": "https://deskappsdev.github.io/BitpieClipBoard/privacy-policy.html"
-  }
-  </script>
 
   <style>
     :root{
@@ -48,7 +21,7 @@
     *{ box-sizing:border-box; }
     html,body{ margin:0; padding:0; }
     body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       line-height:1.6;
       color:var(--ink);
       background:
@@ -58,15 +31,14 @@
     .wrap{
       max-width: 920px;
       margin: 0 auto;
-      padding: 32px 20px 64px;
+      padding: 24px 16px 64px;
     }
     header{
-      display:flex; align-items:center; justify-content:space-between; gap:16px;
+      display:flex; flex-wrap:wrap;
+      align-items:center; justify-content:space-between; gap:12px;
       margin-bottom: 18px;
     }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
+    .brand{ display:flex; align-items:center; gap:12px; flex:1; }
     .logo{
       width:40px;height:40px;border-radius:10px;
       background: linear-gradient(180deg,#233356,#1a2440);
@@ -74,7 +46,7 @@
       box-shadow: 0 8px 18px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.06);
     }
     .logo span{ font-weight:800; color:#cfe0ff; }
-    h1{ font-size: clamp(22px, 2.2vw, 30px); margin:0; letter-spacing:.2px; }
+    h1{ font-size: clamp(22px, 2.4vw, 30px); margin:0; letter-spacing:.2px; }
     .badge{
       font-size:12px; color:#cfe0ff; background:#14203a; border:1px solid var(--ring);
       padding:6px 10px; border-radius: 999px; white-space:nowrap;
@@ -88,20 +60,18 @@
       padding: 20px 18px;
       margin: 14px 0;
     }
-    .card h2{
-      font-size: clamp(16px, 1.8vw, 20px);
-      margin: 0 0 8px;
-    }
+    .card h2{ font-size: clamp(16px, 1.8vw, 20px); margin: 0 0 8px; }
     p{ margin: 8px 0 10px; color: var(--ink); }
     .muted{ color: var(--muted); }
 
     .perm-table{
-      width:100%; border-collapse: collapse; overflow:hidden; border-radius: 12px;
+      width:100%; border-collapse: collapse; border-radius: 12px; overflow:hidden;
       border:1px solid rgba(255,255,255,.08);
     }
     .perm-table th, .perm-table td{
-      padding:12px 14px; text-align:left; vertical-align:top;
+      padding:10px 12px; text-align:left; vertical-align:top;
       border-bottom:1px solid rgba(255,255,255,.06);
+      font-size:14px;
     }
     .perm-table th{ background:#0f1a2e; color:#cfe0ff; font-weight:700; }
     .perm-table tr:last-child td{ border-bottom:none; }
@@ -114,9 +84,19 @@
     a{ color: var(--accent); text-decoration: none; }
     a:hover{ text-decoration: underline; }
 
-    /* small helpers */
     .list{ padding-left: 18px; margin:8px 0; }
     .list li{ margin:6px 0; }
+
+    /* Responsive tweaks */
+    @media(max-width:600px){
+      header{ flex-direction:column; align-items:flex-start; }
+      .badge{ align-self:flex-start; }
+      .perm-table, .perm-table thead{ display:block; }
+      .perm-table tr{ display:flex; flex-direction:column; border-bottom:1px solid rgba(255,255,255,.06); }
+      .perm-table th{ display:none; }
+      .perm-table td{ border:none; padding:6px 0; }
+      .perm-table td:first-child{ font-weight:600; color:#cfe0ff; }
+    }
   </style>
 </head>
 <body>
@@ -135,18 +115,18 @@
     <section class="card">
       <h2>Summary</h2>
       <p><strong>We do not collect, store, sell, or share personal data.</strong> Bitpie Clipboard generates secure passwords, creative usernames, and hashtags directly in your browser. The generated results stay on your device unless you copy them yourself.</p>
-      <p class="muted">The Chrome Web Store may require a privacy policy when an extension declares certain permissions or interacts with remote services. This document explains what our extension does and why those permissions exist.</p>
+      <p class="muted">This policy is required by the Chrome Web Store because the extension declares a host permission. We explain below why it exists and how it’s safe.</p>
     </section>
 
     <section class="card">
       <h2>Data We Collect</h2>
-      <p><strong>None.</strong> We do not collect, track, or transmit any of the following:</p>
+      <p><strong>None.</strong> We do not collect or transmit any of the following:</p>
       <ul class="list">
         <li>Personally identifiable information</li>
         <li>Browsing history, keystrokes, or page content</li>
         <li>Analytics, crash reports, advertising identifiers</li>
       </ul>
-      <p>All generation (passwords, usernames, hashtags) happens <em>locally</em> in your browser. If you press “Copy”, the content is placed onto your system clipboard via the standard Clipboard API and is not sent to us.</p>
+      <p>All generation happens <em>locally</em> in your browser. If you press “Copy”, the content is placed onto your clipboard and never sent to us.</p>
     </section>
 
     <section class="card">
@@ -157,48 +137,23 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>storage</code></td>
-            <td>Saves small local preferences such as last-used options. This improves convenience across sessions.</td>
-            <td>Does not send data off your device. No personal data is stored or shared.</td>
-          </tr>
-          <tr>
-            <td><code>tabs</code></td>
-            <td>Allows the extension to <em>open a new tab</em> only when a remote setting explicitly tells it to (e.g., show a related help page).</td>
-            <td>Does not read your browsing history, tab contents, or track which sites you visit.</td>
-          </tr>
-          <tr>
             <td><code>host_permissions</code><br><small><code>https://firestore.googleapis.com/*</code></small></td>
-            <td>Lets the extension fetch a tiny, read-only configuration value from our Firebase project. That value decides whether to show the built-in tools or load a specific page from our site.</td>
-            <td>Cannot read website content or user data. We do not upload any user information to Firebase.</td>
+            <td>Allows the extension to fetch a small read-only configuration file from our Firebase project. This tells the extension whether to show the built-in tools or load a page from our site.</td>
+            <td>Cannot read user data, browsing history, or third-party content. Only our project is accessed.</td>
           </tr>
         </tbody>
       </table>
-      <p class="muted">We do <strong>not</strong> execute arbitrary remote code. The remote fetch is a simple JSON document (feature flag/URL). No eval, no third-party scripts injected into pages.</p>
+      <p class="muted">We do <strong>not</strong> execute remote code. The Firebase file is a simple JSON flag/URL — no scripts or analytics are run.</p>
     </section>
 
     <section class="card">
       <h2>Third-Party Content</h2>
-      <p>In some cases, the extension may open or embed a page from our own website (<a href="https://deskappsdev.github.io/BitpieClipBoard/" target="_blank" rel="noopener">deskappsdev.github.io/BitpieClipBoard</a>). That website may have its own cookies or logs—see its policy if applicable. This occurs only when the Firebase configuration instructs the extension to show that page.</p>
-    </section>
-
-    <section class="card">
-      <h2>Security</h2>
-      <p>We follow least-privilege principles and avoid collecting data entirely. Generated content remains local. No analytics SDKs are included.</p>
-    </section>
-
-    <section class="card">
-      <h2>Children’s Privacy</h2>
-      <p>Bitpie Clipboard does not target children and does not collect personal information from anyone.</p>
-    </section>
-
-    <section class="card">
-      <h2>Changes to This Policy</h2>
-      <p>If we change this policy, we will update the effective date above and publish the new version at this URL.</p>
+      <p>Sometimes the extension may open or embed a page from our own site (<a href="https://deskappsdev.github.io/BitpieClipBoard/" target="_blank" rel="noopener">deskappsdev.github.io/BitpieClipBoard</a>). That site may have its own cookies/logs — see its policy if applicable.</p>
     </section>
 
     <section class="card">
       <h2>Contact</h2>
-      <p>For questions about this policy or the extension, contact:</p>
+      <p>For questions, contact:</p>
       <p><strong>DeskAppsDev</strong><br>
          Email: <a href="mailto:deskappsdev@gmail.com">deskappsdev@gmail.com</a><br>
          Website: <a href="https://deskappsdev.github.io/BitpieClipBoard/" target="_blank" rel="noopener">deskappsdev.github.io/BitpieClipBoard/</a>
@@ -207,14 +162,12 @@
 
     <div class="footer">
       <span>© <span id="year"></span> DeskAppsDev. All rights reserved.</span>
-      <span class="muted">Extension: Bitpie Clipboard • Version 1.1</span>
+      <span class="muted">Bitpie Clipboard • Version 1.2.1</span>
     </div>
   </div>
 
   <script>
-    // Keep footer year fresh
     document.getElementById('year').textContent = new Date().getFullYear();
-    // (Effective date is hard-set above for audit consistency)
   </script>
 </body>
 </html>
